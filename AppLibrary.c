@@ -33,10 +33,10 @@ void EvolveSystem(float FinalTime,char *fileNameToStore)
 		Agente = newAgent(pos,r,t,GrowthRate);
 		Event = newAppendEvent(Agente,NULL,t);
 		InsertAgentInField(Agente,&Field);
-		Insert_Event_In_Queue(Event, &Queue);
-		
+		Insert_Event_In_Queue(Event, &Queue);		
 	}
-
+	Queue.first=Min_Element(Queue.root);
+	
 	float Time=0.0;
 	while(Time<FinalTime){
 		Time=Process_Queue(&Queue);
@@ -51,9 +51,54 @@ void EvolveSystem(float FinalTime,char *fileNameToStore)
 return;
 }
 
+void SimpleDeterministicMovie(float FinalTime,char *fileNameToStore)
+{
+	int NoIndividuos = 2;
+	float r = 0.0;
+	float t=0.0;
+	int GrowthRate = 1;
+	agentList Field;
+	data_tree Queue;
+
+	Field.NoMembers=0;
+	Field.members=NULL;
+	Queue.root=NULL;
+	agent *Agente;
+	event *Event;
+	
+	sitio pos;
+	
+	int i;
+	for(i=0;i<NoIndividuos;i++)
+	{	
+		pos.i=(i+1)*10.0;
+		pos.j=10.0;
+		Agente = newAgent(pos,r,t,GrowthRate);
+		Event = newAppendEvent(Agente,NULL,t);
+		InsertAgentInField(Agente,&Field);
+		Insert_Event_In_Queue(Event, &Queue);		
+	}
+	Queue.first=Min_Element(Queue.root);
+	
+	float Time=0.0;
+	while(Time<FinalTime){
+		Time=Process_Queue(&Queue);
+	}
+
+	FastForward(Field,Time);
+
+	WriteStateToFile(Field,fileNameToStore,Time);
+	
+	FreeSystem(&Field);
+
+return;
+}
+
+
+
 main(){
 	float Time = 100.0;
-	EvolveSystem(Time,"DATOS/billar");
+	SimpleDeterministic(Time,"DATOS/fix/b");
 	
 return;
 }
