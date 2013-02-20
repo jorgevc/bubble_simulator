@@ -350,6 +350,7 @@ void FastForward(agentList list,float Time)
 				printf("O NO! individuo en el futuro!!!\n");
 			}else{
 				list.members[i]->radius=Radius(r1, t1,Time);
+				list.members[i]->time=Time;
 			}
 		}
 	}
