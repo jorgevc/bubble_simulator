@@ -79,15 +79,21 @@ void SimpleDeterministicMovie(float FinalTime,char *fileNameToStore)
 		Insert_Event_In_Queue(Event, &Queue);		
 	}
 	Queue.first=Min_Element(Queue.root);
-	
+
 	float Time=0.0;
+	float RuleTime=0.0;
+	float DT=1.0;
 	while(Time<FinalTime){
-		Time=Process_Queue(&Queue);
+		if(RuleTime < Queue.first->data->time)
+		{
+			FastForward(Field,RuleTime);
+			Time=RuleTime;
+			WriteStateToFile(Field,fileNameToStore,RuleTime);
+			RuleTime+=DT;
+		}else{
+			Time=Process_Queue(&Queue);
+		}
 	}
-
-	FastForward(Field,Time);
-
-	WriteStateToFile(Field,fileNameToStore,Time);
 	
 	FreeSystem(&Field);
 
@@ -97,8 +103,8 @@ return;
 
 
 main(){
-	float Time = 100.0;
-	SimpleDeterministic(Time,"DATOS/fix/b");
+	float Time = 20.0;
+	SimpleDeterministicMovie(Time,"DATOS/fix/b");
 	
 return;
 }
