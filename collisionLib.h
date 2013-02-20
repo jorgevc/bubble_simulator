@@ -2,7 +2,7 @@
  * Generaly it is used to label a site on a lattice.
 */
 #define INF 1000.0
-#define V 1.0
+#define V 0.31831 // =1/PI
 #define P4R_MAX2 3600.0 // =4*r^{2}_max
 
 typedef struct SITIO sitio;
@@ -47,6 +47,7 @@ node *parent;
 
 struct DATA_TREE{
 node *root;
+node *first;
 };
 
 void init();

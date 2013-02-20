@@ -229,7 +229,6 @@ return;
 float Process_Queue(data_tree *queue)
 {	
 event *processing=NULL;
-node *next=NULL;
 node *root=queue->root;
 event new_event;
 float Time;
@@ -239,8 +238,7 @@ float Time;
 	{
 		processing=(event *)malloc(sizeof(event));
 		
-		next=Min_Element(root);
-		*processing=*(next->data);	
+		*processing=*(queue->first->data);	
 		Process_Event(processing);
 		Update_Next_Event(processing->indv1);
 		root=Dettach_Node(processing->indv1->NextInteraction->Node,root);
@@ -269,11 +267,10 @@ float Time;
 				}
 			}
 		}
-		
-		
 		Time=processing->time;
 		free(processing);	
 		queue->root=root;
+		queue->first=Min_Element(root);
 		return Time;
 	}else{
 		return INF;
