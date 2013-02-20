@@ -28,6 +28,7 @@ void EvolveSystem(float FinalTime,char *fileNameToStore)
 	{
 		rand=F_JKISS();
 		pos.i=rand*100.0;
+		rand=F_JKISS();
 		pos.j=rand*100.0;
 		Agente = newAgent(pos,r,t,GrowthRate);
 		Event = newAppendEvent(Agente,NULL,t);
@@ -52,7 +53,7 @@ return;
 
 main(){
 	float Time = 100.0;
-	EvolveSystem(Time,"DATOS3/b/billar.dat");
+	EvolveSystem(Time,"DATOS/billar");
 	
 return;
 }
