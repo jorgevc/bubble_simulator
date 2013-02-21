@@ -38,13 +38,19 @@ void EvolveSystem(float FinalTime,char *fileNameToStore)
 	Queue.first=Min_Element(Queue.root);
 	
 	float Time=0.0;
+	float RuleTime=0.0;
+	float DT=1.0;
 	while(Time<FinalTime){
-		Time=Process_Queue(&Queue);
+		if(RuleTime < Queue.first->data->time)
+		{
+			FastForward(Field,RuleTime);
+			Time=RuleTime;
+			WriteStateToFile(Field,fileNameToStore,RuleTime);
+			RuleTime+=DT;
+		}else{
+			Process_Queue(&Queue);
+		}
 	}
-
-	FastForward(Field,Time);
-
-	WriteStateToFile(Field,fileNameToStore,Time);
 	
 	FreeSystem(&Field);
 
@@ -103,9 +109,10 @@ return;
 
 
 main(){
-	float Time = 80.0;
+	float Time = 100.0;
 
-	SimpleDeterministicMovie(Time,"DATOS/fix/i");
+	//SimpleDeterministicMovie(Time,"DATOS/fix/i");
+	EvolveSystem(Time,"DATOS/apps/a");
 	
 return;
 }
