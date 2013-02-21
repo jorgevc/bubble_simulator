@@ -53,7 +53,7 @@ return;
 
 void SimpleDeterministicMovie(float FinalTime,char *fileNameToStore)
 {
-	int NoIndividuos = 2;
+	int NoIndividuos = 3;
 	float r = 0.0;
 	float t=0.0;
 	int GrowthRate = 1;
@@ -71,7 +71,7 @@ void SimpleDeterministicMovie(float FinalTime,char *fileNameToStore)
 	int i;
 	for(i=0;i<NoIndividuos;i++)
 	{	
-		pos.i=(i+1)*10.0;
+		pos.i=i*i*2.0;
 		pos.j=10.0;
 		Agente = newAgent(pos,r,t,GrowthRate);
 		Event = newAppendEvent(Agente,NULL,t);
@@ -82,7 +82,7 @@ void SimpleDeterministicMovie(float FinalTime,char *fileNameToStore)
 
 	float Time=0.0;
 	float RuleTime=0.0;
-	float DT=1.0;
+	float DT=3.0;
 	while(Time<FinalTime){
 		if(RuleTime < Queue.first->data->time)
 		{
@@ -91,7 +91,7 @@ void SimpleDeterministicMovie(float FinalTime,char *fileNameToStore)
 			WriteStateToFile(Field,fileNameToStore,RuleTime);
 			RuleTime+=DT;
 		}else{
-			Time=Process_Queue(&Queue);
+			Process_Queue(&Queue);
 		}
 	}
 	
@@ -103,9 +103,9 @@ return;
 
 
 main(){
-	float Time = 20.0;
+	float Time = 80.0;
 
-	SimpleDeterministicMovie(Time,"DATOS/fix/b");
+	SimpleDeterministicMovie(Time,"DATOS/fix/i");
 	
 return;
 }

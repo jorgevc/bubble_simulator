@@ -245,7 +245,7 @@ float Time;
 		root=Attacht_Node(processing->indv1->NextInteraction->Node,root);	
 		if(processing->indv1->NextInteraction->indv2!=NULL)
 		{
-			if(processing->indv1->NextInteraction->indv2->NextInteraction->time >= processing->indv1->NextInteraction->time)
+			if(processing->indv1->NextInteraction->indv2->NextInteraction->indv2 == processing->indv1)
 			{
 				Update_Next_Event(processing->indv1->NextInteraction->indv2);
 				root=Dettach_Node(processing->indv1->NextInteraction->indv2->NextInteraction->Node,root);
@@ -259,7 +259,7 @@ float Time;
 			root=Attacht_Node(processing->indv2->NextInteraction->Node,root);
 			if(processing->indv2->NextInteraction->indv2!=NULL)
 			{
-				if(processing->indv2->NextInteraction->indv2->NextInteraction->time >= processing->indv2->NextInteraction->time)
+				if(processing->indv2->NextInteraction->indv2->NextInteraction->indv2 == processing->indv2)
 				{
 				Update_Next_Event(processing->indv2->NextInteraction->indv2);
 				root=Dettach_Node(processing->indv2->NextInteraction->indv2->NextInteraction->Node,root);
@@ -463,13 +463,13 @@ float ContactTime(float r11,float t11,float r12,float t12,float d2)
 	t12v = t12 * V;
 	t11v = t11 * V;
 	k=d2 - pow(r11,2.0) + pow(r12,2.0) - t12v + t11v;
-	T=(-r11 + t12v + pow(k,2.0)/4.0*d2)/V;
+	T=(-r11 + t12v + pow(k,2.0)/(4.0*d2))/V;
 	return T;
 }
 
 float ContacTime1(float r1,float t1,float d)
 {
 	float T;
-	T=(pow(d,2.0)+V*t1-pow(r1,2.0))/V;
+	T=(pow(d,2.0)-pow(r1,2.0))/V + t1;
 	return T;
 }
