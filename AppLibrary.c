@@ -24,8 +24,11 @@
 
 void EvolveSystem(float FinalTime,char *fileNameToStore)
 {
-	int NoIndividuos = 50;
+	float density=0.05;
+	float lSize=1000.0;
 	float r = 0.0;
+	
+	int NoIndividuos = (int)(density*lSize*lSize);
 	float t=0.0;
 	int GrowthRate = 1;
 	agentList Field;
@@ -41,14 +44,14 @@ void EvolveSystem(float FinalTime,char *fileNameToStore)
 	float rand;
 	sitio pos;
 	
-	init();
+	printf("%d\n", NoIndividuos);
 	int i;
 	for(i=0;i<NoIndividuos;i++)
 	{
 		rand=F_JKISS();
-		pos.i=rand*100.0;
+		pos.i=rand*lSize;
 		rand=F_JKISS();
-		pos.j=rand*100.0;
+		pos.j=rand*lSize;
 		Agente = newAgent(pos,r,t,GrowthRate);
 		Event = newAppendEvent(Agente,NULL,t);
 		InsertAgentInField(Agente,&Field);
@@ -131,7 +134,7 @@ main(){
 	float Time = 100.0;
 
 	//SimpleDeterministicMovie(Time,"DATOS/fix/i");
-	EvolveSystem(Time,"DATOS/apps/a");
+	EvolveSystem(Time,"DATOS/apps/c");
 	
 return;
 }
